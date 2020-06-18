@@ -108,7 +108,7 @@ Una volta che tutti i processori hanno competato i propri round di life cicle (f
 ##### Architettura di comunicazione
 Per esemplificare meglio come i processori comunicano tra di loro :
 
-![Architettura di Comunicazione](immagini/Com.png)
+![Architettura di Comunicazione](Com.png)
 
 È possibile notare che fra i processori tra loro vicini ho instaurato un canale di comunicazione bi-direzionale. Inoltre ogni processo comunica con il master alla fine della computazione del life cicle. La scelta di questa architettura di comunicazione si rivelerà vincente con i dati di benchmark. Infatti questo tipo di comunicazione riduce il traffico sul Communicator Word, facendo in modo che le operaioni di invio e ricezione non rallentino eccessivamente il tempo di esecuzione.
 
@@ -189,7 +189,7 @@ I test sono stati eseguiti su di un cluster di 8 macchine. La tipologia delle ma
 
 ##### Strong Scalability
 
-![Strong Scalability](immagini/StrongScaling.png)
+![Strong Scalability](StrongScaling.png)
 
 
 
@@ -201,21 +201,21 @@ Tuttavia il solo tempo di esecuzione è una metrica di valutazione non sufficien
 
 
 
-![Speedup](immagini/Speedup.png)
+![Speedup](Speedup.png)
 
 dove : 
 
-+ ![](immagini/t1.png)è il tempo di esecuzione del sequenziale
++ ![](t1.png)è il tempo di esecuzione del sequenziale
 + N è il numero di processori che abbiamo utilizzato
-+ ![img](immagini/tn.png) è il numero impiegato con N processori
++ ![img](tn.png) è il numero impiegato con N processori
 
 Il risultato ottenuto è il seguente : 
 
-![](immagini/SpeedupStrong.jpg)
+![](SpeedupStrong.jpg)
 
 La linea in arancione rappresenta lo speedup della nostra soluzione. Come possiamo notare passando da 1 a 2 processori la soluzione fornita ha uno speedup del 104 % circa. Quello che normalmente ci si aspetterebbe è che aumentando il numero di processori l'esecuzione sia più veloce, e quindi abbia uno speedup maggiore, ma contrariamente a quanto detto esso diminuisce gradualmente. Il motivo della discesa dello speedup è dovuto al fatto che aumentando il numero di processori aumentiamo sì la potenza computazionale fornita al nostro programma ma aggiungiamo maggiore OVERHEAD di comunicazione. Ovvero aumentando il numero di processori la nostra soluzione impiegherà sempre più tempo per l'invio e la ricezione dei messaggi. ‪È interessante notare che mentra la discesa dello speedup sia linearmente graduale, quando effettuiamo il test con 15 processori abbiamo un picco in discesa. Analizzando questo dato possiamo notare un altro dato interessante all'interno del grafico. 
 
-![](immagini/AndamentoSp.png)
+![](AndamentoSp.png)
 
 In questo grafico mostro la differenza tra lo speedup ottenuto dal processore precedente e quello attuale. Es. Speedup ottenuto con 3 - Speedup ottenuto con 4 ---> Valore di 4. Il valore per ogni singolo processore mostra **di quanto** decresce lo speedup. 
 
@@ -223,19 +223,19 @@ Com'è possibile notare, lo speedup decresce  in misura minore quando il numero 
 
 Al fine di controllare la veriticità del primo test, ho effettuato un altro test, questa volta su dimensioni minori (5000x4040 1000 (round)). I risultati ottenuti sono stati molto simili, ad eccezione di pochi valori leggermente in controtendenza. Per praticità mostro un grafico che mette in evidenza l'andamento dello speedup in quest'ultimo test e l'andamento medio fra i due esperimenti :
 
-![](immagini/MediaStrong.png)
+![](MediaStrong.png)
 
 Da questo risultato, viene confermato che il compromesso migliore tra numero di processori e speedup ottenuto si ottiene ad 8 processori, mentre viene smentito l'aumento dello speedup con 16 processori. Sarebbe interessante effettuare ulteriori esperimenti per verificare se le migliori prestazioni si hanno quando il numero di processori è una potenza di 2 o meno.
 
 Come ultima osservazione vorrei dire che basandosi sulla formula del calcolo dello speedup che ho mostrato, emerge che lo speedup perfetto si verifica quando è soddisfatta la seguente condizione per ogni processo :
 
-![](immagini/frazione.png)
+![](frazione.png)
 
 Controlliamo i nostri risultati :
 
 | #CPU                          |  1   |  2   |  3   |  4   |  5   |  6   |  7   |  8   |  9   |  10  |  11  |  12  |  13  |  14  |  15  |  16  |
 | ----------------------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| ![](immagini/FrazioneTab.png) |  1   |  2   |  3   |  4   |  5   |  6   |  7   |  8   |  9   |  10  |  11  |  12  |  13  |  14  |  15  |  16  |
+| ![](FrazioneTab.png) |  1   |  2   |  3   |  4   |  5   |  6   |  7   |  8   |  9   |  10  |  11  |  12  |  13  |  14  |  15  |  16  |
 
 **N.B. I risultati sono arrotondati. Il motivo per cui la divisione non è perfetta è dovuta al margine di errore che c'è sul calcolo dei tempi, infatti mentre per il parallelo si utilizza MPI_Wtime() per il sequenziale si prendono i tempi con clock_t. Nonostante ciò nessuno dei valori decimali di questo calcolo superava lo 0.4**
 
@@ -245,7 +245,7 @@ Controlliamo i nostri risultati :
 
 ##### Weak Scalability
 
-![Weak Scalability](immagini/WeakScaling.png)
+![Weak Scalability](WeakScaling.png)
 
 Prima di discutere di questo test è necessario fare una piccola premessa. Per meglio mostrare i risultati ottenuti i dati relativi al tempo di esecuzione sono stati arrotondati per eccesso. Di seguito riporto, per correttezza, i tempi reali ottenuti : 
 
@@ -263,16 +263,16 @@ Nonostante tutto, vorrei far notare che le differenze di tempistiche sono realme
 
 Per lo stesso discorso fatto nel paragrafo precedente, il mero cronometrare i tempi di esecuzione non basta per analizzare lo scaling del programma. Per questo motivo, anche in questo caso, utilizzeremo lo speedup, ottenuto da questa formula : 
 
-![](immagini/Weak.png)
+![](Weak.png)
 
 dove, come prima :
 
-+ ![](immagini/t1.png) è il tempo di esecuzione del sequenziale
-+ ![](immagini/tn.png) è il tempo di esecuzione con N processori
++ ![](t1.png) è il tempo di esecuzione del sequenziale
++ ![](tn.png) è il tempo di esecuzione con N processori
 
 Il risultato ottenuto è il seguente : 
 
-![](immagini/SpeedupWeak.png)
+![](SpeedupWeak.png)
 
 Come prima, la linea arancione rappresenta lo speedup ottenuto. Per meglio mostrare i risultati ottenuti ho arrotondato per difetto i valori dello speedup. 
 
@@ -280,7 +280,7 @@ Come si evince dal grafico l'andamento dello speedup è costante fino al caso in
 
 Come per la Strong Scalability anche qui ho effettuato un secondo test e fatto la media dei risultati ottenuti. Questa volta le dimensioni per ogni singolo core sono rimaste inalterate dato che aumentarle avrebbe rallentato troppo l'esecuzione di ogni test. Osserviamo i risultati :
 
-![](immagini/MediaWeak.png)
+![](MediaWeak.png)
 
 L'andamento del secondo esperimento è molto in linea con i risultati del primo, infatti il valore medio dello speedup si discosta poco dai singoli valori del secondo esperimento. Questa volta però in controtendenza con il secondo esperimento ad 8 processori ho ottenuto un risultato migliore, infatti è l'unico punto in cui lo speedup aumenta considerevolmente.
 
